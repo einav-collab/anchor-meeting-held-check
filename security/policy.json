@@ -1,0 +1,26 @@
+{
+  "_about": "Allowlist for the Anchor meeting check. guard.py blocks every tool call that isn't allowed here. HubSpot is reached only through scripts/hubspot.py (which limits what it can write), Avoma only through scripts/avoma.py, and Google Calendar only through its connector's read tools. MCP tools are matched by the part after the server name (mcp__<server>__<tool>), because connector IDs differ between accounts.",
+
+  "builtin_tools_allowed": ["Read", "Grep", "Glob", "Skill", "ToolSearch", "TodoWrite"],
+  "mcp_tool_prefixes_allowed": ["mcp__ccd_turn__"],
+
+  "calendar_read_tools": ["list_calendars", "list_events", "get_event", "search_events"],
+
+  "hubspot_read_tools": [],
+  "hubspot_write_tool": "",
+
+  "hubspot_create": {},
+  "hubspot_create_association_targets": [],
+  "hubspot_update": {},
+  "status_property": "hs_meeting_outcome",
+  "status_values": ["COMPLETED", "RESCHEDULED", "NO_SHOW", "CANCELED"],
+
+  "object_type_aliases": {
+    "meetings": ["meetings", "meeting", "meeting_event", "0-47"],
+    "contacts": ["contacts", "contact", "0-1"],
+    "companies": ["companies", "company", "0-2"]
+  },
+
+  "bash_commands_allowed": ["jq", "date", "ls", "head", "tail", "wc", "sort", "uniq", "cut"],
+  "bash_python_scripts_allowed": ["scripts/avoma.py", "scripts/hubspot.py"]
+}
