@@ -84,3 +84,15 @@ Open a few meetings in HubSpot and check **Meeting outcome** and **Meeting Outco
 **Re-checking a meeting:** clear its **Meeting Outcome AI - Explanation**. The next run (within 7 days of the meeting) checks it again.
 
 **If a run fails:** nothing is written for meetings it couldn't check, and the next run catches up, because it always looks back 7 days.
+
+---
+
+## Running it in the cloud instead (no computer needed)
+
+The routine can also run as a Claude Code cloud scheduled task, so it doesn't depend on a computer being on.
+
+- **Keys:** `HUBSPOT_API_KEY` and `AVOMA_API_KEY` are set in the cloud environment's settings.
+- **Network:** the environment's Allowed domains include `api.hubapi.com` (Avoma's API is reachable by default).
+- **Calendar:** the scheduled task is given the Google Calendar connector. It reads the AE calendars with the account that connected it, which needs read access to every AE's calendar.
+- **Security guard:** `.claude/settings.json` in this repo runs `security/cloud_guard.py` before every tool call. It applies the full guard (`security/guard.py`) to any session whose opening prompt contains `[anchor-meeting-check-routine]`, which the scheduled task's prompt does. Other sessions, such as one opened to edit the skill, aren't affected. If the transcript can't be read, the guard is applied anyway.
+- **Prompt:** `[anchor-meeting-check-routine] Run the Anchor meeting check: follow SKILL.md in the repo root (settings in references/config.md). Run the scripts from the repo root as python3 scripts/hubspot.py and python3 scripts/avoma.py.`
